@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Text Summarizer</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f5a623, #f76b1c, #fd994b);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffe259;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            resize: none;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(135deg, #72c6ef, #004e92);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        #result {
+            margin-top: 30px;
+            background-color: #fff;
+            color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced Text Summarizer</h1>
+        <form id="summarize-form">
+            <textarea id="input-text" placeholder="Paste your text here..."></textarea><br>
+            <button type="button" onclick="summarizeText()">Summarize</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+        async function summarizeText() {
+            const text = document.getElementById('input-text').value;
+            const response = await fetch('/summarize/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: text })
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText = result.summary;
+        }
+    </script>
+</body>
+</html>
